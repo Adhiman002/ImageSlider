@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=09009, initial-scale=1.0">
+    <title>Slider</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: black;
+            color: #fff;
+        }
+        .slideshow{
+            position: relative;
+            width: 600px;
+            margin: 100px auto;
+        }
+        .slide{
+            width: 100%;
+        }
+        .slide img{
+            width: 100%;
+            border-radius: 50px;
+            
+        }
+        .btn{
+            position: absolute;
+            top: 50%;
+            color: red;
+            font-size: 1em;
+            font-weight: 900;
+            border-radius: 50%;
+            background-color: #ffffff3f;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .next{
+            right: 0;
+        }  
+        .data{
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            background-color: rgba(0,0,0,0.5);
+            width: 100%;
+        
+        }
+
+        .slide{
+            display: none;
+        }
+        .active{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow">
+        <div class="slide active">
+            <img src="1.jpg" alt="">
+            <div class="data">
+                <h2>
+                    First slide
+                </h2>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="2.jpg" alt="">
+            <div class="data">
+                <h2>
+                    second slide
+                </h2>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="3.jpg" alt="">
+            <div class="data">
+                <h2>
+                    third slide
+                </h2>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="4.jpg" alt="">
+            <div class="data">
+                <h2>
+                    forth slide
+                </h2>
+            </div>
+        </div>
+
+        <span class="btn next" onclick="sl(1)">></span>
+        <span class="btn prev" onclick="sl(-1)"><</span>
+    </div>
+    <script>
+        let frag=0
+        function sl(x){
+            frag=frag+x;
+            slideshow(frag)
+        }
+        slideshow(frag);
+        function slideshow(num){
+            let slides=document.getElementsByClassName('slide');
+            if(num == slides.length){
+                frag=0;
+                num=0;
+            }
+            if(num<0){
+                frag=slides.length-1
+                num=slides.length-1
+            }
+            for(let y of slides){
+                y.style.display="none"
+            }
+            slides[num].style.display ='block'
+        }
+    </script>
+
+
+    <script>
+        $(document).ready(function(){
+            let slideCount=$(".slideshow .slide").length;
+            let currentSlide=1;
+            $('.slide:first-child').addClass('active');
+
+            $('.next').click(function(){
+                $('.active').removeClass('active').fadeOut(500, function(){
+
+                    if(currentSlide==slideCount){
+                        currentSlide=1
+                    }
+                    else{
+                        currentSlide++
+                    }
+                    $('.slide:nthChild('+currentSlide+')').addClass('active').fadeIn(500);
+                })
+            })   
+            
+            
+            $('.prev').click(function(){
+                $('.active').removeClass('active').fadeOut(500, function(){
+
+                    if(currentSlide==1){
+                        currentSlide=slideCount;
+                    }
+                    else{
+                        currentSlide--
+                    }
+                    $('.slide:nthChild('+currentSlide+')').addClass('active').fadeIn(500);
+                })
+            })    
+
+            
+        })
+    </script>
+</body>
+</html>
